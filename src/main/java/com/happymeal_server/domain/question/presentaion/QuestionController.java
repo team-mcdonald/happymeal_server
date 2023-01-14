@@ -2,10 +2,10 @@ package com.happymeal_server.domain.question.presentaion;
 
 import com.happymeal_server.domain.question.domain.dto.QuestionDto;
 import com.happymeal_server.domain.question.domain.ro.GetQuestionRo;
+import com.happymeal_server.domain.question.domain.type.Category;
 import com.happymeal_server.domain.question.service.QuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +26,12 @@ public class QuestionController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<GetQuestionRo>> getQuestion() {
-        return ResponseEntity.ok(questionService.getQuestions());
+    public List<GetQuestionRo> getQuestion() {
+        return questionService.getQuestions();
+    }
+
+    @GetMapping("/category")
+    public List<GetQuestionRo> getQuestionByCategory(@RequestParam Category category) {
+        return questionService.getQuestionByCategory(category);
     }
 }
