@@ -5,7 +5,11 @@ import com.happymeal_server.domain.question.domain.dto.AnswerDto;
 import com.happymeal_server.domain.question.domain.dto.QuestionDto;
 import com.happymeal_server.domain.question.domain.type.Category;
 import com.happymeal_server.domain.question.service.AnswerService;
+import com.happymeal_server.domain.question.service.LikeService;
 import com.happymeal_server.domain.question.service.QuestionService;
+import com.happymeal_server.domain.user.domain.User;
+import com.happymeal_server.domain.user.domain.types.UserRole;
+import com.happymeal_server.global.annotation.AuthenticationCheck;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final LikeService likeService;
 
     @PostMapping("/")
 //    @AuthenticationCheck(roles = UserRole.CONSUMER)
@@ -47,8 +52,9 @@ public class QuestionController {
     }
 
     @PostMapping("/like")
-    public int like() {
-
+    @AuthenticationCheck(roles = UserRole.PROVIDER)
+    public int like(@RequestParam Long questionId, @RequestAttribute User user) {
+        likeService.like(questionId, user);
 
         return 200;
     }
