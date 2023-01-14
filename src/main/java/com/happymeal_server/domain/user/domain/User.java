@@ -1,6 +1,7 @@
 package com.happymeal_server.domain.user.domain;
 
 import com.happymeal_server.domain.user.domain.types.UserRole;
+import com.happymeal_server.global.jpa.BaseTime;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 @Table(name = "tbl_user")
 @Entity
-public class User {
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
