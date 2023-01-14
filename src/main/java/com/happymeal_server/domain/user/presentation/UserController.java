@@ -18,14 +18,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @AuthenticationCheck
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public UserLoginResponse login(@RequestBody @Valid UserLoginRequest request) {
         return userService.login(request);
     }
 
-    @AuthenticationCheck
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.CREATED)
     public void join(@RequestBody @Valid UserJoinRequest request) {

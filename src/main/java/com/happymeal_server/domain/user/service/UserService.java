@@ -49,7 +49,7 @@ public class UserService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .password(request.getPassword())
+                .password(encrypt.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
         userRepository.save(user);
