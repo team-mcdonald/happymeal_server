@@ -30,6 +30,12 @@ public class UserController {
         userService.join(request);
     }
 
+    @PostMapping("/refresh")
+    @ResponseStatus(HttpStatus.OK)
+    public String refresh(@RequestBody @Valid String refreshToken) {
+        return userService.refresh(refreshToken);
+    }
+
     @AuthenticationCheck
     @GetMapping("/myinfo")
     @ResponseStatus(HttpStatus.OK)
