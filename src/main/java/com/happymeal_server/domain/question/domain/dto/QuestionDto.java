@@ -1,6 +1,6 @@
 package com.happymeal_server.domain.question.domain.dto;
 
-import com.happymeal_server.domain.question.domain.Category;
+import com.happymeal_server.domain.question.domain.type.Category;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 

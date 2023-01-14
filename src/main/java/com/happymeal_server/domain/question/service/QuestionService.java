@@ -3,14 +3,17 @@ package com.happymeal_server.domain.question.service;
 import com.happymeal_server.domain.question.domain.Question;
 import com.happymeal_server.domain.question.domain.dto.QuestionDto;
 import com.happymeal_server.domain.question.domain.repository.QuestionRepository;
+import com.happymeal_server.domain.question.domain.ro.GetQuestionRo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
-
     private final QuestionRepository questionRepository;
 
     @Transactional
@@ -28,5 +31,10 @@ public class QuestionService {
                 .build();
 
         questionRepository.save(question);
+    }
+
+    public List<GetQuestionRo> getQuestions() {
+
+        return questionRepository.findAll().stream().map(GetQuestionRo::convertRo).collect(Collectors.toList());
     }
 }

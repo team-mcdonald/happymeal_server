@@ -1,11 +1,14 @@
 package com.happymeal_server.domain.question.domain;
 
+import com.happymeal_server.domain.question.domain.type.Category;
 import com.happymeal_server.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "questin")
@@ -31,4 +34,10 @@ public class Question {
     @Column(name = "category", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Category category;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private List<Like> likes;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private List<Answer> answers;
 }

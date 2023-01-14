@@ -1,4 +1,4 @@
-package com.happymeal_server.domain.question.domain;
+package com.happymeal_server.domain.question.domain.type;
 
 public enum Category {
     SOCIAL,
