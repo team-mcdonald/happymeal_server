@@ -5,6 +5,7 @@ import com.happymeal_server.domain.question.domain.dto.QuestionDto;
 import com.happymeal_server.domain.question.domain.repository.QuestionRepository;
 import com.happymeal_server.domain.question.domain.ro.GetQuestionRo;
 import com.happymeal_server.domain.question.domain.type.Category;
+import com.happymeal_server.global.error.exception.QuestionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +42,11 @@ public class QuestionService {
 
     public List<GetQuestionRo> getQuestionByCategory(Category category) {
         return questionRepository.findAllByCategory(category).stream().map(GetQuestionRo::convertRo).collect(Collectors.toList());
+    }
+
+    public Question getQuestionById(Long id) {
+        return questionRepository.findById(id).orElseThrow(() -> {
+            throw QuestionNotFoundException.EXCEPTION;
+        });
     }
 }
