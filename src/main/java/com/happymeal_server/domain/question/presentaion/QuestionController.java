@@ -26,9 +26,9 @@ public class QuestionController {
     private final LikeService likeService;
 
     @PostMapping("/")
-//    @AuthenticationCheck(roles = UserRole.CONSUMER)
-    public int makeQuestion(@Valid @RequestBody QuestionDto dto) {
-        questionService.makeQuestion(dto);
+    @AuthenticationCheck(roles = UserRole.CONSUMER)
+    public int makeQuestion(@Valid @RequestBody QuestionDto dto, @RequestAttribute User user) {
+        questionService.makeQuestion(dto, user);
 
         return 200;
     }
@@ -44,9 +44,9 @@ public class QuestionController {
     }
 
     @PostMapping("/answer")
-//    @AuthenticationCheck(roles = UserRole.PROVIDER)
-    public int createAnswer(@Valid @RequestBody AnswerDto dto, @RequestParam Long questionId) {
-        answerService.createAnswer(dto, questionId);
+    @AuthenticationCheck(roles = UserRole.PROVIDER)
+    public int createAnswer(@Valid @RequestBody AnswerDto dto, @RequestParam Long questionId, @RequestAttribute User user) {
+        answerService.createAnswer(dto, questionId, user);
 
         return 200;
     }
