@@ -29,6 +29,9 @@ public class User extends BaseTime {
     @Column(length = 11, nullable = false, unique = true)
     private String phone;
 
+    @Column(length = 255, nullable = false)
+    private String password;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
