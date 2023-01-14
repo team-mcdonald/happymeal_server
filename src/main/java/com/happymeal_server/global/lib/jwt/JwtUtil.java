@@ -1,4 +1,4 @@
-package com.happymeal_server.global.lib;
+package com.happymeal_server.global.lib.jwt;
 
 import com.happymeal_server.domain.user.domain.User;
 import com.happymeal_server.domain.user.domain.repository.UserRepository;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
 
@@ -25,7 +24,7 @@ public class JwtUtil {
     @Value("${app.jwt.secret.access}")
     private String secretAccessKey;
 
-    @Value("${app.jwt.secret.access}")
+    @Value("${app.jwt.secret.refresh}")
     private String secretRefreshKey;
 
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
@@ -48,7 +47,7 @@ public class JwtUtil {
                 secretKey = secretRefreshKey;
         }
 
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
+        byte[] apiKeySecretBytes = secretKey.getBytes();
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         Map<String, Object> headerMap = new HashMap<>();
@@ -68,14 +67,14 @@ public class JwtUtil {
 
     public User validateToken(String token) {
 
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretAccessKey)).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(secretAccessKey.getBytes()).parseClaimsJws(token).getBody();
         return userRepository.findById(claims.get("id", Long.class))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public String refresh(String refreshToken) {
 
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secretRefreshKey)).parseClaimsJws(refreshToken).getBody();
+        Claims claims = Jwts.parser().setSigningKey(secretRefreshKey.getBytes()).parseClaimsJws(refreshToken).getBody();
         User user = userRepository.findById(claims.get("id", Long.class))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 

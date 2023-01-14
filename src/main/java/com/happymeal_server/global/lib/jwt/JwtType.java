@@ -1,4 +1,4 @@
-package com.happymeal_server.global.lib;
+package com.happymeal_server.global.lib.jwt;
 
 public enum JwtType {
     ACCESS,
