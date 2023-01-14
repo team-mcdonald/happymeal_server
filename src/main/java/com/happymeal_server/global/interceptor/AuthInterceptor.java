@@ -1,0 +1,44 @@
+package com.happymeal_server.global.interceptor;
+
+import com.happymeal_server.domain.user.domain.User;
+import com.happymeal_server.global.annotation.AuthenticationCheck;
+import com.happymeal_server.global.error.exception.InvalidTokenException;
+import com.happymeal_server.global.lib.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+@Component
+@RequiredArgsConstructor
+public class AuthInterceptor implements HandlerInterceptor {
+
+    private final JwtUtil jwtUtil;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        AuthenticationCheck authenticationCheck = handlerMethod.getMethodAnnotation(AuthenticationCheck.class);
+
+        if (authenticationCheck == null) {
+            return true;
+        }
+
+        String token = jwtUtil.extract(request, "Bearer");
+
+        if (token == null || token.length() == 0) {
+            throw InvalidTokenException.EXCEPTION;
+        }
+
+        User user = jwtUtil.validateToken(token);
+        request.setAttribute("user", user);
+        return true;
+    }
+}
