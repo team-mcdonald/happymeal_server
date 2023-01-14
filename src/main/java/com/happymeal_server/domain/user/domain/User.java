@@ -1,5 +1,6 @@
 package com.happymeal_server.domain.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.happymeal_server.domain.user.domain.types.UserRole;
 import com.happymeal_server.global.jpa.BaseTime;
 import jakarta.persistence.*;
@@ -30,6 +31,7 @@ public class User extends BaseTime {
     private String phone;
 
     @Column(length = 255, nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

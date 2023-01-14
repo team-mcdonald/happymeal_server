@@ -62,4 +62,8 @@ public class UserService {
             providerRepository.save(provider);
         }
     }
+
+    public String refresh(String refreshToken) {
+        return jwtUtil.refresh(refreshToken);
+    }
 }
