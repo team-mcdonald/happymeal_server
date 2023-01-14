@@ -29,15 +29,19 @@ public class User extends BaseTime {
     @Column(length = 11, nullable = false, unique = true)
     private String phone;
 
+    @Column(length = 255, nullable = false)
+    private String password;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
     @Builder
-    public User(String name, String email, String phone, UserRole role) {
+    public User(String name, String email, String phone, UserRole role, String password) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.role = role;
+        this.password = password;
     }
 }

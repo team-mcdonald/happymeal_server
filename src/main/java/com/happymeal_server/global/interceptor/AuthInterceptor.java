@@ -5,7 +5,7 @@ import com.happymeal_server.domain.user.domain.types.UserRole;
 import com.happymeal_server.global.annotation.AuthenticationCheck;
 import com.happymeal_server.global.error.exception.InvalidPermissionException;
 import com.happymeal_server.global.error.exception.InvalidTokenException;
-import com.happymeal_server.global.lib.JwtUtil;
+import com.happymeal_server.global.lib.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
