@@ -22,10 +22,10 @@ import java.util.*;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-    @Value("${jwt.secret.access}")
+    @Value("${app.jwt.secret.access}")
     private String secretAccessKey;
 
-    @Value("${jwt.secret.access}")
+    @Value("${app.jwt.secret.access}")
     private String secretRefreshKey;
 
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
